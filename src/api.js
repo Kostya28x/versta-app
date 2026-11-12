@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:4000/api/v1'
+const API_URL = 'https://versta-api.onrender.com/api/v1'
+
 
 export async function registerUser(email, password, name) {
   const res = await fetch(`${API_URL}/auth/register`, {
