@@ -1,0 +1,517 @@
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; height: 100%; margin: 0; }
+body { font-family: Inter, Arial, sans-serif; color: #18352a; background: #fbfcf8; }
+button, input, select { font: inherit; cursor: pointer; }
+
+/* =================================
+   ГЛАВНЫЙ ЭКРАН
+================================= */
+.versta-app { display: flex; flex-direction: column; width: 100%; height: 100%; }
+.map-section { display: flex; flex: 1; min-height: 0; }
+.map-area { position: relative; flex: 1; min-width: 0; min-height: 0; }
+.map-container { position: absolute; inset: 0; background: #dce8d1; }
+.map-legend { position: absolute; z-index: 1; bottom: 18px; left: 18px; padding: 10px 14px; border: 1px solid #dce6dc; border-radius: 12px; background: #ffffffed; font-size: 12px; color: #62766b; }
+.map-legend strong { color: #174d35; display: block; margin-bottom: 4px; }
+
+/* =================================
+   ШАПКА САЙТА
+================================= */
+/* ===== ШАПКА САЙТА ===== */
+.topbar {
+  display: flex;
+  justify-content: center;
+  background: #15251c;
+  border-bottom: 1px solid #2a3a30;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 70px;
+}
+
+/* Убрали max-width: 1400px, чтобы растянуть на весь экран */
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 24px; /* Отступы от самого края экрана */
+  height: 100%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Добавили зеленую рамку логотипу */
+/* Логотип */
+img.brand-logo {
+  width: 60px;               /* Было 52px */
+  height: 60px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 2px solid #4ade80;
+  padding: 2px;
+  background: #101713;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  font-size: 28px;           /* Увеличили */
+  letter-spacing: 4px;       /* Чуть шире */
+  color: #f3f0e5;
+  line-height: 1.1;
+}
+/* Слоган */
+.brand-text p {
+  margin: 4px 0 0;
+  font-size: 11px;           /* Увеличили */
+  letter-spacing: 1.5px;
+  color: #a1b09a;
+  text-transform: uppercase;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Кнопка TOP-10 */
+.top-top-button {
+  padding: 10px 20px;
+  border: 1px solid #e6a65d;
+  border-radius: 10px;
+  background: transparent;
+  color: #e6a65d;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.top-top-button:hover {
+  background: #e6a65d;
+  color: #101713;
+}
+
+/* =================================
+   ПРАВАЯ ПАНЕЛЬ (Тёмная, стильная)
+================================= */
+.route-panel { position: relative; z-index: 2; display: flex; flex-direction: column; width: 380px; min-width: 320px; height: 100%; background: #101713; border-left: 1px solid #2a3a30; box-shadow: -5px 0 20px rgba(0,0,0,0.2); }
+.route-panel-collapsed { width: 54px; min-width: 54px; }
+.route-panel-collapsed .panel-heading > div { display: none; }
+.panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 76px; padding: 14px 18px; border-bottom: 1px solid #2a3a30; color: #fff; }
+.panel-heading h2 { margin: 0; font-size: 20px; }
+.panel-heading p { margin: 5px 0 0; color: #8a9c90; font-size: 12px; }
+.panel-toggle { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #34443a; border-radius: 9px; color: #fff; background: #1a241e; font-size: 24px; }
+.panel-content { overflow-y: auto; padding: 16px 18px 20px; }
+.field-label { display: block; margin: 0 0 7px; color: #a1b09a; font-size: 12px; font-weight: 700; }
+.panel-input, .panel-content select { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #34443a; border-radius: 9px; outline: none; color: #fff; background: #1a241e; font-size: 13px; }
+.panel-input:focus, .panel-content select:focus { border-color: #4ade80; }
+.filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px 10px; margin-top: 16px; }
+.full-width { grid-column: 1 / -1; }
+.list-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 22px 0 14px; }
+.list-heading h3 { margin: 0 0 4px; color: #fff; font-size: 15px; }
+.list-heading span { color: #8a9c90; font-size: 12px; }
+.reset-button { padding: 7px 9px; border: 1px solid #34443a; border-radius: 8px; color: #e6a65d; background: #1a241e; font-size: 12px; font-weight: 700; }
+.route-list { display: flex; flex-direction: column; gap: 9px; margin-top: 12px; }
+/* Карточка в списке */
+/* Карточка в списке (фиксированная высота) */
+.route-list-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  padding: 0;
+  border: 1px solid #2a3a30;
+  border-radius: 12px;
+  background: #1a241e;
+  color: #fff;
+  text-align: left;
+  overflow: hidden;
+  transition: 0.2s;
+  
+  /* Делаем фиксированную высоту для всех карточек, чтобы они были ровными */
+  height: 190px; 
+}
+
+.route-list-card:hover, .route-list-card-active {
+  background: #263b2e;
+  border-color: #4ade80;
+}
+
+/* Картинка сверху */
+.route-card-img {
+  width: 100%;
+  height: 90px; /* Фиксированная высота картинки */
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Контент снизу */
+.route-card-content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  flex: 1; /* Занимает всё оставшееся место */
+  width: 100%;
+}
+
+.route-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+/* Название маршрута (не дает прыгать высоте) */
+.route-card-top strong {
+  font-size: 15px;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Обрезает название после 2-х строк, если оно слишком длинное */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Плашка сложности */
+.route-difficulty {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Регион */
+.route-place {
+  color: #8a9c90;
+  font-size: 12px;
+  line-height: 1.3;
+  margin: 0;
+  
+  /* Обрезаем регион, если он слишком длинный */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Нижняя часть (дистанция и сердечко) */
+.route-meta {
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+.empty-results { padding: 18px; border: 1px dashed #34443a; border-radius: 10px; color: #8a9c90; text-align: center; font-size: 12px; }
+
+/* =================================
+   НОВЫЙ POPUP С КАРТИНКОЙ
+================================= */
+.maplibregl-popup-content { padding: 0; border-radius: 16px; overflow: hidden; background: #101713; border: 1px solid #2a3a30; }
+.popup-image { width: 100%; height: 120px; object-fit: cover; display: block; }
+.popup-body { padding: 16px; }
+.popup-content h3 { margin: 0 0 4px; color: #fff; font-size: 18px; }
+.popup-place { margin: 0 0 12px; color: #8a9c90; font-size: 12px; }
+.popup-stats { display: flex; gap: 10px; margin-bottom: 15px; font-size: 12px; color: #4ade80; font-weight: 700; }
+.show-route { width: 100%; padding: 12px; border: 0; border-radius: 8px; color: #101713; background: #4ade80; font-weight: 700; transition: 0.2s; }
+.show-route:hover { background: #6ee7a0; }
+
+/* =================================
+   КАРТОЧКА МАРШРУТА (Clean UI)
+================================= */
+.route-details-overlay { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(10, 15, 12, 0.85); backdrop-filter: blur(8px); }
+.route-details-clean {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  max-height: 95vh; /* Увеличили с 90vh до 95vh, чтобы помещалось больше текста */
+  background: #101713;
+  border-radius: 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+  border: 1px solid #2a3a30;
+  animation: slideUp 0.3s ease-out;
+  
+  /* СКРЫВАЕМ ПОЛЗУНОК (для Chrome, Safari, Edge) */
+  scrollbar-width: none; /* Для Firefox */
+}
+
+/* СКРЫВАЕМ ПОЛЗУНОК для Webkit (Chrome, Safari) */
+.route-details-clean::-webkit-scrollbar {
+  display: none;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+/* Красный крестик */
+.route-close-clean {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #d64c3e; /* Красный цвет */
+  backdrop-filter: blur(5px);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.route-close-clean:hover {
+  background: #ff5c4d; /* Ярче при наведении */
+  transform: scale(1.05);
+}
+.route-close-clean:hover { background: #fff; color: #000; }
+.route-hero-image { position: relative; height: 320px; width: 100%; }
+.route-hero-image img { width: 100%; height: 100%; object-fit: cover; }
+.route-hero-gradient { position: absolute; inset: 0; background: linear-gradient(to top, #101713 0%, rgba(16, 23, 19, 0.4) 50%, transparent 100%); }
+.route-hero-text { position: absolute; bottom: 30px; left: 40px; right: 40px; color: #fff; }
+.route-badge { display: inline-block; padding: 6px 12px; background: rgba(74, 222, 128, 0.2); border: 1px solid #4ade80; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #4ade80; margin-bottom: 15px; }
+.route-hero-text h2 { margin: 0 0 8px 0; font-size: 36px; font-family: 'Georgia', serif; line-height: 1.1; }
+.route-hero-text p { margin: 0; font-size: 15px; color: #b0c2b2; }
+.route-stats-clean {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 40px;
+  border-bottom: 1px solid #2a3a30;
+}
+.stat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #1a241e;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #2a3a30;
+}
+.stat-box { display: flex; flex-direction: column; gap: 6px; background: #1a241e; padding: 16px; border-radius: 16px; border: 1px solid #2a3a30; }
+.stat-icon { font-size: 18px; color: #4ade80; margin-bottom: 4px; }
+.stat-box strong { font-size: 20px; color: #fff; }
+.stat-box span:last-child { font-size: 12px; color: #7a8d7e; }
+.route-content-clean { padding: 30px 40px 40px; color: #d1dfd4; }
+.info-block { margin-bottom: 35px; }
+.info-block h3 { margin: 0 0 15px 0; font-size: 22px; color: #fff; display: flex; align-items: center; gap: 10px; }
+.info-block h3::before { content: ''; display: block; width: 4px; height: 20px; background: #4ade80; border-radius: 2px; }
+.info-block p { margin: 0; font-size: 15px; line-height: 1.7; color: #a8b8ac; }
+.clean-list {
+  list-style: none; /* Убирает стандартные точки браузера */
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px; /* Чуть увеличили отступ между пунктами */
+}
+
+.clean-list li {
+  position: relative;
+  padding-left: 0; /* Убрали отступ слева, так как точки больше нет */
+  font-size: 15px;
+  line-height: 1.6;
+  color: #a8b8ac;
+}
+
+/* Полностью удаляем псевдоэлемент, который рисовал кастомную точку "•" */
+.clean-list li::before {
+  display: none; 
+}
+.route-season-clean { margin-top: 40px; padding: 24px; background: #1a241e; border-radius: 16px; border: 1px solid #2a3a30; text-align: center; }
+.route-season-clean span { display: block; font-size: 11px; letter-spacing: 2px; color: #7a8d7e; font-weight: 700; margin-bottom: 8px; }
+.route-season-clean strong { font-size: 18px; color: #fff; }
+
+/* =================================
+   TOP-10 PAGE
+================================= */
+.top-page { position: fixed; inset: 0; z-index: 9999999; background: #101713; color: #f3f1e9; padding: 30px 5%; overflow-y: auto; }
+.top-page-header { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding-bottom: 35px; border-bottom: 1px solid #34443a; }
+.top-back-button { background: #202e25; color: #fff; border: 1px solid #455a49; padding: 14px 20px; border-radius: 10px; font-size: 15px; transition: 0.2s; }
+.top-back-button:hover { background: #31523b; }
+.top-page-title { text-align: center; }
+.top-page-title > span, .top-page-intro > div > span { color: #b3c59b; letter-spacing: 3px; font-size: 12px; font-weight: 700; }
+.top-page-title h1 { font-size: clamp(32px, 5vw, 54px); margin: 10px 0; }
+.top-page-title p { color: #aab5a8; }
+.top-page-count { display: flex; flex-direction: column; align-items: center; color: #aab5a8; }
+.top-page-count strong { font-size: 38px; color: #d3bd81; }
+.top-page-content { max-width: 1500px; margin: 50px auto; }
+.top-page-intro { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 30px; }
+.top-page-intro h2 { font-size: 30px; margin: 12px 0; }
+.top-page-intro > p { color: #aab5a8; max-width: 430px; line-height: 1.7; }
+.top-places-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; }
+.top-place-card { background: #1a241e; border: 1px solid #34443a; border-radius: 16px; overflow: hidden; transition: transform 0.25s, border-color 0.25s; cursor: pointer; }
+.top-place-card:hover { transform: translateY(-5px); border-color: #a4b78b; }
+.top-place-image { height: 240px; position: relative; overflow: hidden; }
+.top-place-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.top-place-card:hover .top-place-image img { transform: scale(1.06); }
+.top-place-number, .top-place-rating { position: absolute; top: 15px; padding: 9px 13px; border-radius: 8px; font-weight: 700; }
+.top-place-number { left: 15px; background: #17251cdd; color: #fff; }
+.top-place-rating { right: 15px; background: #d3bd81; color: #172019; }
+.top-place-info { padding: 22px; }
+.top-place-category { color: #b5c69d; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
+.top-place-info h3 { font-size: 25px; margin: 12px 0; }
+.top-place-region { color: #c5b88e; font-size: 14px; }
+.top-place-description { color: #b4beb5; line-height: 1.65; min-height: 75px; }
+.top-place-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #34443a; padding-top: 16px; margin-top: 18px; font-size: 12px; color: #b5c69d; }
+
+/* =================================
+   АДАПТАЦИЯ
+================================= */
+@media (max-width: 1000px) { .top-places-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) {
+  .topbar { height: 60px; }
+  .brand-text p { display: none; }
+  .map-section { flex-direction: column; }
+  .map-area { flex: 1 1 55%; min-height: 220px; }
+  .route-panel { width: 100%; min-width: 0; max-height: 48%; border-top: 1px solid #2a3a30; border-left: 0; }
+  .route-panel-collapsed { width: 100%; max-height: 60px; }
+  .top-page-header { flex-wrap: wrap; }
+  .top-page-title { order: -1; width: 100%; }
+  .top-page-intro { display: block; }
+  .top-places-grid { grid-template-columns: 1fr; }
+  .route-hero-image { height: 240px; }
+  .route-hero-text { left: 20px; right: 20px; bottom: 20px; }
+  .route-hero-text h2 { font-size: 26px; }
+  .route-stats-clean { grid-template-columns: repeat(2, 1fr); padding: 20px; }
+  .route-content-clean { padding: 20px; }
+
+
+  /* Кнопка закрытия в попапе */
+.popup-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 32px;
+  height: 32px;
+  background: #d64c3e;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.popup-close-btn:hover {
+  background: #ff5c4d;
+}
+
+/* Чтобы крестик был поверх картинки, родителю нужен position relative */
+.popup-content {
+  position: relative;
+}
+
+/* ===== ИСПРАВЛЕННАЯ ШАПКА ===== */
+.topbar {
+  display: flex;
+  justify-content: center;
+  background: #15251c; 
+  border-bottom: 1px solid #2a3a30;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 70px;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 24px;
+  height: 100%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Правая часть с кнопками */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Отступ между кнопкой Войти и ТОП-10 */
+}
+
+/* Кнопка Войти (Ярко-зеленая, как на фото) */
+.btn-login {
+  padding: 10px 24px;
+  border-radius: 10px;
+  background: #34d399; /* Яркий зеленый */
+  color: #101713; /* Темный текст */
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-login:hover {
+  background: #4ade80;
+  transform: translateY(-1px);
+}
+
+/* Кнопка ТОП-10 (Золотая) */
+.top-top-button {
+  padding: 10px 20px;
+  border: 1px solid #e6a65d;
+  border-radius: 10px;
+  background: transparent;
+  color: #e6a65d;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.top-top-button:hover {
+  background: #e6a65d;
+  color: #101713;
+}
+
+/* Синий текст в модальном окне */
+.auth-switch-text {
+  color: #a1b09a;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-switch-text span {
+  color: #3b82f6; /* Синий цвет */
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.auth-switch-text span:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+
+
+
+
+
+}
