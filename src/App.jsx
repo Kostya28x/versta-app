@@ -716,7 +716,7 @@ export default function App() {
     const loadSelectedTrack = async () => {
       try {
         if (selectedRouteId === 'baikal') {
-          const res = await fetch('/data/tracks/baikal-trail-lisvyanka-bolshoe-goloustnoe.geojson')
+          const res = await fetch('data/tracks/baikal-trail-lisvyanka-bolshoe-goloustnoe.geojson')
           if (res.ok) {
             const data = await res.json()
             const coords = data.features.filter(f => f.geometry && ['LineString', 'MultiLineString'].includes(f.geometry.type)).flatMap(f => getLineCoordinates(f.geometry))
@@ -725,20 +725,20 @@ export default function App() {
           return
         }
 
-        if (selectedRouteId === 'kamchatka') { const res = await fetch('/data/tracks/kamchatka.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'kamchatka').geometry.coordinates); return }
-        if (selectedRouteId === 'west-caucasus') { const res = await fetch('/data/tracks/west-caucasus.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'west-caucasus').geometry.coordinates); return }
-        if (selectedRouteId === 'khibiny') { const res = await fetch('/data/tracks/khibiny.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'khibiny').geometry.coordinates); return }
-        if (selectedRouteId === 'altai-1') { const res = await fetch('/data/tracks/altai.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'altai-1').geometry.coordinates); return }
-        if (selectedRouteId === 'altai-2') { const res = await fetch('/data/tracks/altai-2.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'altai-2').geometry.coordinates); return }
-        if (selectedRouteId === 'stolby') { const res = await fetch('/data/tracks/stolby.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'stolby').geometry.coordinates); return }
-        if (selectedRouteId === 'ladoga') { const res = await fetch('/data/tracks/ladoga.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'ladoga').geometry.coordinates); return }
-        if (selectedRouteId === 'karelia') { const res = await fetch('/data/tracks/karelia.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'karelia').geometry.coordinates); return }
-        if (selectedRouteId === 'torzhok') { const res = await fetch('/data/tracks/torzhok.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'torzhok').geometry.coordinates); return }
-        if (selectedRouteId === 'devichi-kosy') { const res = await fetch('/data/tracks/devichi-kosy-terskol.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'devichi-kosy').geometry.coordinates); return }
-        if (selectedRouteId === 'chuchkhur') { const res = await fetch('/data/tracks/chuchkhur.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'chuchkhur').geometry.coordinates); return }
-        if (selectedRouteId === 'kurshskaya-kosa') { const res = await fetch('/data/tracks/kurshskaya-kosa.gpx'); if (res.ok) { const feature = parseGpx(await res.text(), 'kurshskaya-kosa'); fitTrack(feature.geometry.coordinates) } return }
-        if (selectedRouteId === 'tver-city') { const res = await fetch('/data/tracks/tver.gpx'); if (res.ok) { const feature = parseGpx(await res.text(), 'tver-city'); fitTrack(feature.geometry.coordinates) } return }
-        if (selectedRouteId === 'valdai') { const res = await fetch('/data/tracks/valdai.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'valdai').geometry.coordinates); return }
+        if (selectedRouteId === 'kamchatka') { const res = await fetch('data/tracks/kamchatka.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'kamchatka').geometry.coordinates); return }
+        if (selectedRouteId === 'west-caucasus') { const res = await fetch('data/tracks/west-caucasus.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'west-caucasus').geometry.coordinates); return }
+        if (selectedRouteId === 'khibiny') { const res = await fetch('data/tracks/khibiny.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'khibiny').geometry.coordinates); return }
+        if (selectedRouteId === 'altai-1') { const res = await fetch('data/tracks/altai.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'altai-1').geometry.coordinates); return }
+        if (selectedRouteId === 'altai-2') { const res = await fetch('data/tracks/altai-2.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'altai-2').geometry.coordinates); return }
+        if (selectedRouteId === 'stolby') { const res = await fetch('data/tracks/stolby.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'stolby').geometry.coordinates); return }
+        if (selectedRouteId === 'ladoga') { const res = await fetch('data/tracks/ladoga.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'ladoga').geometry.coordinates); return }
+        if (selectedRouteId === 'karelia') { const res = await fetch('data/tracks/karelia.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'karelia').geometry.coordinates); return }
+        if (selectedRouteId === 'torzhok') { const res = await fetch('data/tracks/torzhok.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'torzhok').geometry.coordinates); return }
+        if (selectedRouteId === 'devichi-kosy') { const res = await fetch('data/tracks/devichi-kosy-terskol.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'devichi-kosy').geometry.coordinates); return }
+        if (selectedRouteId === 'chuchkhur') { const res = await fetch('data/tracks/chuchkhur.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'chuchkhur').geometry.coordinates); return }
+        if (selectedRouteId === 'kurshskaya-kosa') { const res = await fetch('data/tracks/kurshskaya-kosa.gpx'); if (res.ok) { const feature = parseGpx(await res.text(), 'kurshskaya-kosa'); fitTrack(feature.geometry.coordinates) } return }
+        if (selectedRouteId === 'tver-city') { const res = await fetch('data/tracks/tver.gpx'); if (res.ok) { const feature = parseGpx(await res.text(), 'tver-city'); fitTrack(feature.geometry.coordinates) } return }
+        if (selectedRouteId === 'valdai') { const res = await fetch('data/tracks/valdai.gpx'); if (res.ok) fitTrack(parseGpx(await res.text(), 'valdai').geometry.coordinates); return }
       } catch (err) { console.error(err) }
     }
     loadSelectedTrack()
