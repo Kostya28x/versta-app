@@ -3,4 +3,5 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/versta-app/', // <--- ВЕРНУТЬ ЭТО
 })
