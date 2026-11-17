@@ -416,21 +416,13 @@ const topPlaces = [
 
 
 const survivalGuides = [
-  { id: 1, title: 'Встреча с медведем', category: 'Животные', image: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&q=80', description: 'Что делать, чтобы избежать встречи, и как действовать, если вы столкнулись с хищником.' },
-  { id: 2, title: 'Кровотечение', category: 'Медицина', image: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=600&q=80', description: 'Как наложить жгут и остановить кровь до приезда скорой помощи.' },
-  { id: 3, title: 'Как развести огонь', category: 'Костёр', image: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=600&q=80', description: 'Виды костров, способы разжигания без спичек и правила безопасности в лесу.' },
-  { id: 4, title: 'Переохлаждение', category: 'Медицина', image: 'https://images.unsplash.com/photo-1478827387698-1527781a4887?w=600&q=80', description: 'Как согреться, если промок и замерз, и что нельзя делать при обморожении.' },
-  { id: 5, title: 'Ориентирование на местности', category: 'Навигация', image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80', description: 'Как найти стороны света без компаса и ориентироваться по природным признакам.' },
-  { id: 6, title: 'Змеиные укусы', category: 'Животные', image: 'https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=600&q=80', description: 'Первая помощь при укусе змеи и как отличить ядовитую змею от безопасной.' },
-  { id: 7, title: 'Переломы и вывихи', category: 'Медицина', image: 'https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=600&q=80', description: 'Как зафиксировать конечность подручными средствами и не навредить пострадавшему.' },
-  { id: 8, title: 'Поиск воды', category: 'Вода', image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600&q=80', description: 'Как найти воду в лесу, можно ли пить из ручья и как очистить её без фильтра.' },
-  { id: 9, title: 'Сооружение укрытия', category: 'Лагерь', image: 'https://images.unsplash.com/photo-1504280387966-2b1e5a2a0a5b?w=600&q=80', description: 'Как построить шалаш или навес из веток, чтобы пережить холодную ночь.' },
-  { id: 10, title: 'Подача сигнала SOS', category: 'Спасение', image: 'https://images.unsplash.com/photo-1580481102401-7c3a7cb76ce4?w=600&q=80', description: 'Как привлечь внимание спасателей (костёр, свист, зеркало, знаки).' },
-  { id: 11, title: 'Ожоги и солнечные удары', category: 'Медицина', image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=600&q=80', description: 'Что делать при ожоге от костра и как помочь при тепловом ударе.' },
-  { id: 12, title: 'Лесные пожары', category: 'Безопасность', image: 'https://images.unsplash.com/photo-1602986273543-6f4b03fb0d7e?w=600&q=80', description: 'Как выходить из зоны пожара и что делать, если огонь окружил вас.' },
-  { id: 13, title: 'Встреча с волками', category: 'Животные', image: 'https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=600&q=80', description: 'Почему нельзя поворачиваться спиной и как отпугнуть стаю.' },
-  { id: 14, title: 'Вязание узлов', category: 'Снаряжение', image: 'https://images.unsplash.com/photo-1520408222757-6f9f95d87d5d?w=600&q=80', description: 'Базовые узлы (прямой, восьмерка, булинь), которые нужны в походе.' },
-  { id: 15, title: 'Молния и гроза', category: 'Погода', image: 'https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?w=600&q=80', description: 'Где прятаться в лесу и поле, если началась гроза (и где нельзя).' },
+  { id: 1, title: 'Встреча с медведем', category: 'Животные', image: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&q=80', description: 'Что делать, чтобы избежать встречи, и как действовать, если вы столкнулись с хищником.', video: '6dd0db543495937e19b7b776559cb41b' },
+  { id: 2, title: 'Кровотечение', category: 'Медицина', image: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=600&q=80', description: 'Как наложить жгут и остановить кровь до приезда скорой помощи.', video: 'ff85b6d1603ea70e541813a4501af527' },
+  { id: 3, title: 'Как развести огонь', category: 'Костёр', image: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=600&q=80', description: 'Виды костров, способы разжигания без спичек и правила безопасности в лесу.', video: '36c51ba17d23b849160a51daf365bab8' },
+  { id: 4, title: 'Переохлаждение', category: 'Медицина', image: 'https://images.unsplash.com/photo-1478827387698-1527781a4887?w=600&q=80', description: 'Как согреться, если промок и замерз, и что нельзя делать при обморожении.', video: 'c96d3f570ab0e084730f16ef1bb3c44b' },
+  { id: 5, title: 'Сооружение укрытия', category: 'Лагерь', image: 'https://images.unsplash.com/photo-1504280387966-2b1e5a2a0a5b?w=600&q=80', description: 'Как построить шалаш или навес из веток, чтобы пережить холодную ночь.', video: '27ab48918e72fc44c6f7efc04a2047a5' },
+  // Остальные пока без видео (можно добавить позже)
+  { id: 6, title: 'Ориентирование на местности', category: 'Навигация', image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80', description: 'Как найти стороны света без компаса и ориентироваться по природным признакам.' },
 ]
 
 function getDistanceLabel(route, gpsStats) {
@@ -496,6 +488,7 @@ export default function App() {
     const [viewedUserFavorites, setViewedUserFavorites] = useState([])
   const [viewedUserReviews, setViewedUserReviews] = useState([])
   const [survivalOpen, setSurvivalOpen] = useState(false)
+  const [videoUrl, setVideoUrl] = useState(null)
 
   useEffect(() => {
     gpsStatsRef.current = gpsStats
@@ -973,11 +966,18 @@ export default function App() {
             
             <div className="top-places-grid">
               {survivalGuides.map((guide) => (
-                <article 
-                  className="top-place-card" 
-                  key={guide.id} 
-                  onClick={() => alert('Скоро здесь будет видео!')} // <-- Пока просто заглушка для видео
-                >
+             <article 
+  className="top-place-card" 
+  key={guide.id} 
+  onClick={() => {
+    if (guide.video) {
+      setVideoUrl(guide.video)
+    } else {
+      alert('Видео для этого урока скоро появится!')
+    }
+  }}
+>
+                
                   <div className="top-place-image">
                     <img src={guide.image} alt={guide.title} />
                     <span className="top-place-number">#{String(guide.id).padStart(2, '0')}</span>
@@ -1718,6 +1718,44 @@ export default function App() {
             </div>
           </div>
         )}
+
+
+
+                {/* МОДАЛЬНОЕ ОКНО С ВИДЕО */}
+        {videoUrl && (
+          <div className="route-details-overlay" onClick={() => setVideoUrl(null)} style={{ zIndex: 10000 }}>
+            <div 
+              style={{ 
+                position: 'relative', width: '100%', maxWidth: '800px', 
+                background: '#000', borderRadius: '16px', overflow: 'hidden',
+                boxShadow: '0 25px 80px rgba(0, 0, 0, 0.8)'
+              }} 
+              onClick={e => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setVideoUrl(null)}
+                style={{ 
+                  position: 'absolute', top: '10px', right: '10px', zIndex: 100, 
+                  background: '#d64c3e', border: 'none', color: '#fff', 
+                  width: '36px', height: '36px', borderRadius: '50%', 
+                  fontSize: '18px', fontWeight: 'bold', cursor: 'pointer' 
+                }}
+              >
+                ✕
+              </button>
+              
+              {/* Плеер Rutube */}
+              <iframe 
+                src={`https://rutube.ru/play/embed/${videoUrl}`} 
+                style={{ width: '100%', height: '450px', border: 'none' }} 
+                allow="clipboard-write; autoplay" 
+                allowFullScreen
+                title="Видеоурок"
+              ></iframe>
+            </div>
+          </div>
+        )}
+        
       </main>
     </>
   )
@@ -1727,3 +1765,4 @@ export default function App() {
 
 // npm run dev
 // Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+//npm run build
