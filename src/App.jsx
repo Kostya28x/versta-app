@@ -489,6 +489,9 @@ export default function App() {
   const [viewedUserReviews, setViewedUserReviews] = useState([])
   const [survivalOpen, setSurvivalOpen] = useState(false)
   const [videoUrl, setVideoUrl] = useState(null)
+  const [forumOpen, setForumOpen] = useState(false)
+
+
 
   useEffect(() => {
     gpsStatsRef.current = gpsStats
@@ -999,6 +1002,31 @@ export default function App() {
       )}
 
 
+            {/* СТРАНИЦА ФОРУМА (ЗАГЛУШКА) */}
+      {forumOpen && (
+        <main className="top-page">
+          <header className="top-page-header">
+            <button className="top-back-button" onClick={() => setForumOpen(false)}>← Вернуться к карте</button>
+            <div className="top-page-title">
+              <span>СООБЩЕСТВО ВЕРСТЫ</span>
+              <h1>Форум</h1>
+              <p>Задай вопрос, поделись опытом или найди попутчика</p>
+            </div>
+            <div className="top-page-count">
+              <strong>0</strong>
+              <span>тем</span>
+            </div>
+          </header>
+          <section className="top-page-content">
+            <div style={{ textAlign: 'center', padding: '50px 0', color: '#a1b09a' }}>
+              <h2>Форум находится в разработке</h2>
+              <p>Совсем скоро здесь можно будет задавать вопросы и общаться с другими путешественниками.</p>
+            </div>
+          </section>
+        </main>
+      )}
+
+
       <main className="versta-app dark-theme" style={{ display: 'flex' }}>
         <header className="topbar">
           <div className="topbar-inner">
@@ -1018,17 +1046,30 @@ export default function App() {
                 🏕 Выживание
               </button>
 
-            <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-              <button className="top-top-button" onClick={() => setTopOpen(true)} style={{ marginRight: 'auto' }}>
+                        <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              
+              {/* Кнопка Форум (самая левая из группы) */}
+              <button className="top-top-button" onClick={() => setForumOpen(true)}>
+                💬 Форум
+              </button>
+
+              {/* Кнопка Выживание (слева от ТОП-10) */}
+              <button className="top-top-button" onClick={() => setSurvivalOpen(true)}>
+                🏕 Выживание
+              </button>
+
+              {/* Кнопка ТОП-10 (слева от Войти) */}
+              <button className="top-top-button" onClick={() => setTopOpen(true)}>
                 ★ TOP-10
               </button>
 
+              {/* Кнопка Войти или Аватарка (самая правая) */}
               {currentUser ? (
                 <div 
                   onClick={() => setProfileOpen(true)}
                   style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '6px 12px', borderRadius: '30px', background: '#1a241e', border: '1px solid #2a3a30' }}
                 >
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#34d399', color: '#101713', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', overflow: 'hidden', position: 'relative' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#34d399', color: '#101713', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '16px', overflow: 'hidden' }}>
                     {currentUser.avatar ? (
                       <img src={currentUser.avatar} alt="Аватар" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     ) : (
