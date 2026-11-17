@@ -490,6 +490,13 @@ export default function App() {
   const [survivalOpen, setSurvivalOpen] = useState(false)
   const [videoUrl, setVideoUrl] = useState(null)
   const [forumOpen, setForumOpen] = useState(false)
+    const [threads, setThreads] = useState([])
+  const [newThreadTitle, setNewThreadTitle] = useState('')
+  const [forumThreadOpen, setForumThreadOpen] = useState(false)
+  const [currentThreadId, setCurrentThreadId] = useState(null)
+  const [currentThreadTitle, setCurrentThreadTitle] = useState('')
+  const [currentThreadPosts, setCurrentThreadPosts] = useState([])
+  const [newPostText, setNewPostText] = useState('')
 
 
 
@@ -900,6 +907,68 @@ export default function App() {
     setCurrentUser(null)
   }
 
+    // Загрузка тем при открытии форума
+  useEffect(() => {
+    if (forumOpen) {
+      fetch('https://versta-api.onrender.com/api/v1/forum/threads', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => { if (data.threads) setThreads(data.threads) })
+    }
+  }, [forumOpen])
+
+  async function handleCreateThread(e) {
+    e.preventDefault()
+    if (!newThreadTitle.trim()) return
+
+    const res = await fetch('https://versta-api.onrender.com/api/v1/forum/threads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ title: newThreadTitle })
+    })
+    
+    if (res.ok) {
+      setNewThreadTitle('')
+      // Обновляем список тем
+      const updated = await fetch('https://versta-api.onrender.com/api/v1/forum/threads').then(r => r.json())
+      if (updated.threads) setThreads(updated.threads)
+    } else {
+      alert('Ошибка при создании темы')
+    }
+  }
+
+  async function openThread(threadId) {
+    setCurrentThreadId(threadId)
+    const thread = threads.find(t => t.id === threadId)
+    setCurrentThreadTitle(thread ? thread.title : '')
+    setForumThreadOpen(true)
+    
+    const res = await fetch(`https://versta-api.onrender.com/api/v1/forum/threads/${threadId}/posts`)
+    const data = await res.json()
+    if (data.posts) setCurrentThreadPosts(data.posts)
+  }
+
+  async function handleCreatePost(e) {
+    e.preventDefault()
+    if (!newPostText.trim()) return
+
+    const res = await fetch(`https://versta-api.onrender.com/api/v1/forum/threads/${currentThreadId}/posts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ text: newPostText })
+    })
+
+    if (res.ok) {
+      setNewPostText('')
+      // Обновляем сообщения
+      const updated = await fetch(`https://versta-api.onrender.com/api/v1/forum/threads/${currentThreadId}/posts`).then(r => r.json())
+      if (updated.posts) setCurrentThreadPosts(updated.posts)
+    } else {
+      alert('Ошибка при отправке')
+    }
+  }
+
   return (
     <>
       {topOpen && (
@@ -1002,9 +1071,10 @@ export default function App() {
       )}
 
 
-            {/* СТРАНИЦА ФОРУМА (ЗАГЛУШКА) */}
+          
+            {/* СТРАНИЦА ФОРУМА */}
       {forumOpen && (
-        <main className="top-page">
+        <main className="top-page" style={{ paddingTop: '80px' }}> {/* <-- Отступ сверху */}
           <header className="top-page-header">
             <button className="top-back-button" onClick={() => setForumOpen(false)}>← Вернуться к карте</button>
             <div className="top-page-title">
@@ -1013,17 +1083,113 @@ export default function App() {
               <p>Задай вопрос, поделись опытом или найди попутчика</p>
             </div>
             <div className="top-page-count">
-              <strong>0</strong>
+              <strong>{threads.length}</strong>
               <span>тем</span>
             </div>
           </header>
+
           <section className="top-page-content">
-            <div style={{ textAlign: 'center', padding: '50px 0', color: '#a1b09a' }}>
-              <h2>Форум находится в разработке</h2>
-              <p>Совсем скоро здесь можно будет задавать вопросы и общаться с другими путешественниками.</p>
+            
+            {/* Форма создания темы */}
+            {currentUser && (
+              <div style={{ background: '#1a241e', padding: '20px', borderRadius: '16px', border: '1px solid #2a3a30', marginBottom: '30px' }}>
+                <h3 style={{ color: '#fff', marginTop: 0 }}>Создать новую тему</h3>
+                <form onSubmit={handleCreateThread} style={{ display: 'flex', gap: '10px' }}>
+                  <input 
+                    type="text" 
+                    placeholder="Заголовок темы (например: Ищу попутчика на Байкал)" 
+                    value={newThreadTitle} 
+                    onChange={(e) => setNewThreadTitle(e.target.value)}
+                    style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #34443a', background: '#101713', color: '#fff' }}
+                  />
+                  <button type="submit" style={{ padding: '12px 24px', background: '#34d399', color: '#101713', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}>
+                    Создать
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* Список тем */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {threads.length === 0 ? (
+                <div style={{ textAlign: 'center', color: '#a1b09a', padding: '40px' }}>
+                  <p>Пока нет ни одной темы. Будьте первым!</p>
+                </div>
+              ) : (
+                threads.map(thread => (
+                  <div 
+                    key={thread.id}
+                    onClick={() => openThread(thread.id)}
+                    style={{ 
+                      background: '#1a241e', border: '1px solid #2a3a30', borderRadius: '12px', 
+                      padding: '16px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                    }}
+                  >
+                    <div>
+                      <h3 style={{ color: '#fff', margin: '0 0 6px 0', fontSize: '18px' }}>{thread.title}</h3>
+                      <span style={{ color: '#8a9c90', fontSize: '13px' }}>
+                        Автор: {thread.user_name} · {new Date(thread.created_at).toLocaleDateString('ru-RU')}
+                      </span>
+                    </div>
+                    <div style={{ color: '#4ade80', fontWeight: 'bold', fontSize: '14px' }}>
+                      {thread.posts_count} ответов
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </section>
         </main>
+      )}
+
+            {/* ОКНО ВНУТРИ ТЕМЫ ФОРУМА */}
+      {forumThreadOpen && (
+        <div className="route-details-overlay" onClick={() => setForumThreadOpen(false)} style={{ zIndex: 10000 }}>
+          <div 
+            className="route-details-clean" 
+            style={{ maxWidth: '800px', width: '90%', padding: '30px', display: 'flex', flexDirection: 'column', maxHeight: '90vh' }} 
+            onClick={e => e.stopPropagation()}
+          >
+            <button className="route-close-clean" onClick={() => setForumThreadOpen(false)}>✕</button>
+            
+            <h2 style={{ color: '#fff', marginTop: 0 }}>{currentThreadTitle}</h2>
+            
+            {/* Список сообщений */}
+            <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '20px' }}>
+              {currentThreadPosts.map(post => (
+                <div key={post.id} style={{ background: '#1a241e', padding: '16px', borderRadius: '12px', border: '1px solid #2a3a30' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                    <strong style={{ color: '#4ade80' }}>{post.user_name}</strong>
+                    {post.user_role === 'admin' && (
+                      <span style={{ background: 'rgba(120, 30, 30, 0.4)', color: '#e57373', fontSize: '9px', padding: '2px 4px', borderRadius: '3px', fontWeight: '900' }}>MOD</span>
+                    )}
+                    <span style={{ color: '#7a8d7e', fontSize: '11px', marginLeft: 'auto' }}>
+                      {new Date(post.created_at).toLocaleString('ru-RU')}
+                    </span>
+                  </div>
+                  <p style={{ color: '#d1dfd4', margin: 0, whiteSpace: 'pre-wrap' }}>{post.text}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Форма ответа */}
+            {currentUser ? (
+              <form onSubmit={handleCreatePost} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <textarea 
+                  value={newPostText}
+                  onChange={(e) => setNewPostText(e.target.value)}
+                  placeholder="Написать ответ..."
+                  style={{ width: '100%', minHeight: '80px', padding: '10px', borderRadius: '8px', border: '1px solid #34443a', background: '#101713', color: '#fff', resize: 'vertical' }}
+                />
+                <button type="submit" style={{ alignSelf: 'flex-end', padding: '10px 24px', background: '#34d399', color: '#101713', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}>
+                  Отправить
+                </button>
+              </form>
+            ) : (
+              <p style={{ color: '#a1b09a' }}>Войдите, чтобы ответить в теме.</p>
+            )}
+          </div>
+        </div>
       )}
 
 
@@ -1038,13 +1204,8 @@ export default function App() {
               </div>
             </div>
 
-              <button 
-                className="top-top-button" 
-                onClick={() => setSurvivalOpen(true)}
-                style={{ marginRight: '10px' }} 
-              >
-                🏕 Выживание
-              </button>
+             
+              
 
                         <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               
