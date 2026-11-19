@@ -1,4 +1,4 @@
-const API_URL = 'https://versta-api.onrender.com/api/v1'
+const API_URL = 'https://versta-app.de2.netrun.io/api/v1'
 
 
 export async function registerUser(email, password, name) {
