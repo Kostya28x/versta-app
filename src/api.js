@@ -1,5 +1,4 @@
-const API_URL = 'https://versta-app.de2.netrun.io/api/v1'
-
+const API_URL = 'https://versta-api.de2.netrun.io/api/v1'
 
 export async function registerUser(email, password, name) {
   const res = await fetch(`${API_URL}/auth/register`, {
