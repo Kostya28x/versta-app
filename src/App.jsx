@@ -538,7 +538,7 @@ export default function App() {
     if (mapRef.current || !mapContainer.current) return
     const map = new maplibregl.Map({
       container: mapContainer.current,
-      style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+      style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
       center: [90, 55],
       zoom: 3.1,
       attributionControl: true,
