@@ -538,14 +538,14 @@ export default function App() {
     if (mapRef.current || !mapContainer.current) return
     const map = new maplibregl.Map({
       container: mapContainer.current,
-      style: 'https://tiles.openfreemap.org/styles/liberty',
+      style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
       center: [90, 55],
       zoom: 3.1,
       attributionControl: true,
     })
     mapRef.current = map
     map.addControl(new maplibregl.NavigationControl(), 'top-right')
-
+map.resize();
     map.on('load', () => {
       map.addSource('route-points', { type: 'geojson', data: makePoints(routes), cluster: true, clusterMaxZoom: 8, clusterRadius: 48 })
       map.addLayer({ id: 'clusters', type: 'circle', source: 'route-points', filter: ['has', 'point_count'], paint: { 'circle-color': '#246849', 'circle-radius': ['step', ['get', 'point_count'], 19, 5, 24, 10, 29], 'circle-stroke-width': 3, 'circle-stroke-color': '#ffffff' } })
